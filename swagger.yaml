@@ -1,0 +1,87 @@
+openapi: 3.0.0
+info:
+  title: Mega API Documentation
+  version: 1.0.0
+paths:
+  /translator:
+    post:
+      summary: Translate Text
+      description: Translate text from one language to another.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                q:
+                  type: string
+                  description: Text to be translated.
+                source:
+                  type: string
+                  description: Source language code.
+                target:
+                  type: string
+                  description: Target language code.
+                format:
+                  type: string
+                  description: Translation format.
+      responses:
+        '200':
+          description: Successful translation.
+          content:
+            application/json:
+              example:
+                statusCode: 200
+                message: Translation successful
+                translated_text: Translated text goes here
+        '422':
+          description: Error in translation.
+          content:
+            application/json:
+              example:
+                statusCode: 422
+                message: Translation error
+
+  /getapiusage:
+    get:
+      summary: Get API Usage History
+      description: Retrieve the history of API usage (entire data in the history table).
+      responses:
+        '200':
+          description: Successful operation.
+          content:
+            application/json:
+              example:
+                statusCode: 200
+                message: API usage history retrieved successfully
+
+  /translatefile:
+    post:
+      summary: Translate and save CSV file content
+      description: Translate the content of a CSV file and save it to the database.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                csvfile:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: CSV file translated and saved successfully
+          content:
+            application/json:
+              example:
+                statusCode: 200
+                message: CSV file translated and saved.
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              example:
+                statusCode: 422
+                message: Error message if applicable
